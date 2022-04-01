@@ -15,6 +15,10 @@ class PreferencesViewController: NSViewController {
         presenter.viewDidLoad(view: self)
     }
     
+    override func viewDidAppear() {
+        view.window?.makeKey()
+    }
+    
     @IBAction func sliderUpdates(slider: NSSlider) {
         presenter.sliderMoved(value: Int(slider.intValue))
         intervalChanged?()
