@@ -9,6 +9,7 @@ class PreferencesViewController: NSViewController {
     
     private let presenter = PreferencesPresenter()
     var intervalChanged: (() -> Void)?
+    var onClose: (() -> Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -98,7 +99,11 @@ extension PreferencesViewController: PreferencesView {
     }
     
     func close() {
-        view.window?.close()
+        if self.onClose == nil {
+            view.window?.close()
+        } else {
+            self.onClose?()
+        }
     }
 }
 
