@@ -10,11 +10,12 @@ final class MenuBarPresenter {
         self.popover = nil
     }
     
-    func launch() {
+    func onLaunch(timerProgressionCallback: @escaping (Int) -> Void) {
         reminder.startTimer()
+        reminder.onTimerProgression = timerProgressionCallback
     }
     
-    func statusItemTap(statusItem: NSStatusItem) {
+    func onStatusItemTap(statusItem: NSStatusItem) {
         if self.popover?.isShown == true {
             self.popover?.close()
             self.popover = nil
@@ -27,7 +28,7 @@ final class MenuBarPresenter {
             
             popover.contentViewController = vc
             
-            vc.intervalChanged = { self.resetTimer() }
+            vc.intervalChanged = self.resetTimer
             vc.onClose = { popover.close() }
             
             popover.show(relativeTo: button.bounds, of: button, preferredEdge: NSRectEdge.minY)
